@@ -32,3 +32,5 @@ from Function test, Function callee
 where isTest(test) and
       calls(test, callee)
 select callee, "is directly called by a test"
+
+
