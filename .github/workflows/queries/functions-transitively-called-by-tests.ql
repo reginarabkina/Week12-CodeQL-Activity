@@ -32,7 +32,3 @@ from Function test, Function callee
 where isTest(test) and
       calls+(test, callee)
 select callee, "is transitively called by a test"
-
-from Function f
-where f.getNumLines() > 10
-select f, "Function is longer than 10 lines"
