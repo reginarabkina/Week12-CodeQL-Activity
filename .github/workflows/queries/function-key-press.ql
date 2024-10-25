@@ -3,12 +3,19 @@ import javascript
 /**
  * Predicate to determine if a function calls 'pressActionKey'.
  */
-predicate callsPressActionKey(Function testFunc, Function calledFunc) {
-  testFunc.getName() != "" and
-  calledFunc.getName() = "pressActionKey" and
-  exists(testFunc.getACall().getTarget() = calledFunc)
+predicate callsPressActionKey(Function caller, Function callee) {
+  callee.getName() = "pressActionKey" and
+  exists(caller.getACall().getTarget() = callee)
 }
 
-from Function testFunc, Function calledFunc
-where callsPressActionKey(testFunc, calledFunc)
-select testFunc, "Test function calling pressActionKey"
+/**
+ * Predicate to determine if a function is likely a test function.
+ * (Assumes test functions contain 'test' in their name.)
+ */
+predicate isTestFunction(Function func) {
+  func.getName().matches(".*test.*")
+}
+
+from Function testFunc, Function pressFunc
+where isTestFunction(testFunc) and callsPressActionKey(testFunc, pressFunc)
+select testFunc, "This test function calls pressActionKey."
