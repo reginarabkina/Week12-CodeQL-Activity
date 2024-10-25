@@ -5,7 +5,7 @@ import javascript
  */
 predicate callsPressActionKey(Function caller, Function callee) {
   callee.getName() = "pressActionKey" and
-  exists(caller.getACall().getTarget() = callee)
+  caller.getACall().getTarget() = callee
 }
 
 /**
